@@ -1,30 +1,40 @@
-// Open & Close Cart
+// // Open & Close Cart
 var cart = document.querySelector('.cart');
 
 function open_cart() {
-    cart.classList.add("active");
+    if (cart) {
+        cart.classList.add("active");
+    }
 }
 
 function close_cart() {
-    cart.classList.remove("active");
+    if (cart) {
+        cart.classList.remove("active");
+    }
 }
 
 // Open & Close Menu
 var menu = document.querySelector('#menu');
 
 function open_menu() {
-    menu.classList.add("active");
+    if (menu) {
+        menu.classList.add("active");
+    }
 }
 
 function close_menu() {
-    menu.classList.remove("active");
+    if (menu) {
+        menu.classList.remove("active");
+    }
 }
 
 // Change Item Image
 let bigImage = document.getElementById("bigimg");
 
 function changeItemImage(img) {
-    bigImage.src = img;
+    if (bigImage) {
+        bigImage.src = img;
+    }
 }
 
 // Add Items in Cart
@@ -34,12 +44,21 @@ let product_cart = [];
 
 // Fetch products from the server
 fetch('https://eco-back.vercel.app/api/products')
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
-        all_products_json = data.reduce((acc, product) => {
-            acc[product.id] = product;
-            return acc;
-        }, {});
+        if (Array.isArray(data)) {
+            all_products_json = data.reduce((acc, product) => {
+                acc[product.id] = product;
+                return acc;
+            }, {});
+        } else {
+            console.error('Data is not an array:', data);
+        }
     })
     .catch(error => console.error('Error fetching products:', error));
 
@@ -78,14 +97,14 @@ function getCartItems() {
         `;
         total_price += product_cart[i].price;
     }
-    items_in_cart.innerHTML = items_c;
-    price_cart_head.innerHTML = "$" + total_price.toFixed(2);
-    count_item.innerHTML = product_cart.length;
+    if (items_in_cart) items_in_cart.innerHTML = items_c;
+    if (price_cart_head) price_cart_head.innerHTML = "$" + total_price.toFixed(2);
+    if (count_item) count_item.innerHTML = product_cart.length;
 
-    count_item_cart.innerHTML = `(${product_cart.length} Item${product_cart.length !== 1 ? 's' : ''} in cart)`;
-    price_cart_total.innerHTML = "$" + total_price.toFixed(2);
-    cart_count.innerHTML = `(${product_cart.length} Item${product_cart.length !== 1 ? 's' : ''} in cart)`;
-    document.querySelector(".price_cart_total").innerText = `$${total_price.toFixed(2)}`;
+    if (count_item_cart) count_item_cart.innerHTML = `(${product_cart.length} Item${product_cart.length !== 1 ? 's' : ''} in cart)`;
+    if (price_cart_total) price_cart_total.innerHTML = "$" + total_price.toFixed(2);
+    if (cart_count) cart_count.innerHTML = `(${product_cart.length} Item${product_cart.length !== 1 ? 's' : ''} in cart)`;
+    if (document.querySelector(".price_cart_total")) document.querySelector(".price_cart_total").innerText = `$${total_price.toFixed(2)}`;
 }
 
 function remove_from_cart(index) {
@@ -102,17 +121,22 @@ function remove_from_cart(index) {
 // Preloader
 window.addEventListener('load', function () {
     setTimeout(function () {
-        document.getElementById('preloader').style.display = 'none';
-        document.body.classList.add('loaded');
+        let preloader = document.getElementById('preloader');
+        if (preloader) {
+            preloader.style.display = 'none';
+            document.body.classList.add('loaded');
+        }
     }, 3000);
 });
 
 // Back to Top
 let back_to_top = document.querySelector(".back_to_top");
 
-back_to_top.addEventListener("click", function () {
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+if (back_to_top) {
+    back_to_top.addEventListener("click", function () {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
     });
-});
+}
