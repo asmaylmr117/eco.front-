@@ -1,5 +1,5 @@
 // رابط API لجلب بيانات الشرائح
-const slideDataUrl = 'https://eco-back.vercel.app/api/slides';
+const slideDataUrl = 'https://eco-back.vercel.app/api/v1/slides';
 
 // دالة لبدء تهيئة Swipers
 async function initializeSwipers() {
