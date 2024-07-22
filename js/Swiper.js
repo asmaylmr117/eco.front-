@@ -4,7 +4,7 @@ const slideDataUrl = 'https://eco-back.vercel.app/api/v1/slides';
 // دالة لبدء تهيئة Swipers
 async function initializeSwipers() {
   try {
-    const response = await fetch(slideDataUrl);
+    const response = await fetch('https://eco-back.vercel.app/api/v1/slides');
     const data = await response.json();
 
     if (response.ok) {
