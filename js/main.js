@@ -43,7 +43,7 @@ let cart_count = document.querySelector(".top_cart span");
 let product_cart = [];
 
 // Fetch products from the server
-fetch('https://eco-back.vercel.app/api/products')
+fetch('https://eco-back.vercel.app/api/v1/products')
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
